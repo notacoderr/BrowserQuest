@@ -2,7 +2,7 @@
 
 [![Screenshot](http://img.youtube.com/vi/kYcNJQ3Y6Sg/0.jpg)](http://www.youtube.com/watch?v=kYcNJQ3Y6Sg)
 
-[Play the RPG Demo:](http://play.jrpg.com)
+[Play the RPG Demo:](http://play.im3d.com)
 
 
 BrowserQuest was a HTML5/JavaScript multiplayer game experiment setup in 2012 by the Mozilla project. The project was not being maintained or updated, the website went down some of the dependencies disappeared from Node Package Manager. The javascript language also had major changes in 2016 which created issues.  And everything just stopped working.
