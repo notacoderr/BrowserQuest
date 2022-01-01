@@ -44,13 +44,13 @@ See the LICENSE file for details.
 
 ## Credits
 
-2020 Port to Docker by:
-
-- Colorado Stark- [Colorado Stark](http://www.coloradostark.com)
-
 Original Project Created by [Little Workshop](http://www.littleworkshop.fr):
 
 - Franck Lecollinet - [@whatthefranck](http://twitter.com/whatthefranck)
 - Guillaume Lecollinet - [@glecollinet](http://twitter.com/glecollinet)
+
+2020 Restoration and Port to Docker by:
+
+- Colorado Stark- [Colorado Stark](http://www.coloradostark.com)
 
 
