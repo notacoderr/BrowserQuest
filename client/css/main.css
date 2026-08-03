@@ -161,6 +161,18 @@ footer, header, hgroup, menu, nav, section {
     
     #playercount {font-family:'GraphicPixel';color:#e3e3e3;position:absolute;}
     #playercount:hover {cursor:pointer;color:#FCE045;}
+    #progression-hud {position:absolute;right:12px;top:12px;z-index:50;width:150px;padding:8px 10px;background:rgba(18,12,9,.88);border:2px solid #c89b4b;color:#fff;font-family:'GraphicPixel';text-align:center;box-shadow:0 2px 8px #000;}
+    #progression-hud:hover {color:#FCE045;}
+    #xp-track {height:7px;margin:5px 0 3px;background:#2b211b;border:1px solid #8d6b38;text-align:left;}
+    #xp-fill {display:block;height:100%;width:0;background:#58a9ff;transition:width .3s ease;}
+    #quest-panel {position:absolute;right:12px;top:82px;z-index:49;width:280px;max-height:55%;overflow:auto;padding:12px;background:rgba(18,12,9,.94);border:2px solid #c89b4b;color:#eee;font-family:'GraphicPixel';opacity:0;pointer-events:none;transform:translateY(-8px);transition:.2s ease;}
+    #quest-panel.active {opacity:1;pointer-events:auto;transform:translateY(0);}
+    #quest-panel h2 {margin:0 0 10px;color:#FCE045;font-size:18px;}
+    #quest-panel ul {margin:0;padding:0;list-style:none;}
+    #quest-panel li {padding:7px 0;border-top:1px solid rgba(200,155,75,.35);}
+    #quest-panel li strong, #quest-panel li span {display:block;}
+    #quest-panel li span, #quest-panel small {margin-top:3px;color:#bbb;font-size:11px;}
+    #quest-panel li.complete strong {color:#77d477;}
     #population {background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:absolute;font-family:'GraphicPixel';color:#fff;text-align:center;opacity:0;pointer-events:none;-moz-transition:0.2s opacity linear, 0.2s height ease;-webkit-transition:0.2s opacity linear, 0.2s height ease;-o-transition:0.2s opacity linear, 0.2s height ease;-ms-transition:0.2s opacity linear, 0.2s height ease;transition:0.2s opacity linear, 0.2s height ease;height:0;overflow:hidden;}
     #population span:nth-child(1) {color:#FCE045;}
     #population.visible {opacity:1;pointer-events:auto;}

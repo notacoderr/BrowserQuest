@@ -209,6 +209,16 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
 	    </div>
 		<div id="container">
 		    <div id="canvasborder">
+		        <aside id="progression-hud" class="clickable" aria-label="Character progression" onclick="var panel=document.getElementById('quest-panel');panel.className=panel.className==='active'?'':'active';">
+		            <div>Level <span id="level-value">1</span></div>
+		            <div id="xp-track"><span id="xp-fill"></span></div>
+		            <small id="xp-text">0 / 100 XP</small>
+		        </aside>
+		        <aside id="quest-panel">
+		            <h2>Quest Journal</h2>
+		            <ul id="quest-list"></ul>
+		            <small>Click the level display to close</small>
+		        </aside>
 		        <article id="instructions" class="clickable">
 		            <div class="close"></div>
 		            <h1>
