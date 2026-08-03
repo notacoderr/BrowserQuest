@@ -1,58 +1,52 @@
-# BrowserQuest
+# BrowserQuest Modernized
 
-[![Screenshot](http://img.youtube.com/vi/kYcNJQ3Y6Sg/0.jpg)](http://www.youtube.com/watch?v=kYcNJQ3Y6Sg)
+This repository modernizes Mozilla's BrowserQuest experiment so it runs on current Node.js versions and adds a server-authoritative MMO progression foundation.
 
-[Play the RPG Demo:](http://play.im3d.com)
+## Run locally
 
+Requirements: Node.js 20 or newer and npm/pnpm.
 
-BrowserQuest was a HTML5/JavaScript multiplayer game experiment setup in 2012 by the Mozilla project. The project was not being maintained or updated, the website went down some of the dependencies disappeared from Node Package Manager. The javascript language also had major changes in 2016 which created issues.  And everything just stopped working.
+```sh
+npm install
+npm start
+```
 
-I wasn't able to find a good running version or instructions on how to set this up that still worked anywhere. The goal of this repository fork was to restore the old code.  There is now a stable version that works, and through docker it has all of the dependencies frozen in time.  It can be deployed on a local Docker container with the instructions below.  
+Open <http://localhost:8000>. The Node server now serves both the game client and the WebSocket endpoint. Its health endpoint is <http://localhost:8000/status>.
 
-To deploy it to a live server, the only other step you you will need to do is change the IP addresses in the client/config folder to the IP in your server.  See the client directory readme for further instructions.
+## MMO progression
 
-## Documentation
+- Every kill and collected item awards XP.
+- XP thresholds increase by level.
+- `Pest Control`, `Bone Collector`, and `Field Supplier` are one-time quests.
+- `Hunt Contract` resets after every five kills and can be completed indefinitely.
+- Progress is stored server-side in `server/data/progression.json` and restored by case-insensitive character name.
+- The in-game level display opens a quest journal with progress and rewards.
 
-To run the program on a local machine with Docker type:
+Character names are not authenticated in this historical prototype. A production deployment should add accounts and attach progression records to account IDs rather than names.
 
-```docker container run -it -p 80:80 -p 8000:8000 coloradostark/browserquest bash```
+## Verification
 
-You will see a command prompt, type the following:
+```sh
+npm run check   # parses all server/shared/client JavaScript
+npm test        # progression behavior tests
+npm run smoke   # starts a server and tests HTTP + WebSocket handshake
+```
 
-```node server/js/main.js &```
+## Docker
 
-The server is now running.  Now Open a new command prompt session and then type the following:
+```sh
+docker build -t browserquest .
+docker run --rm -p 8000:8000 browserquest
+```
 
-```docker container exec -it YOUR-CONTAINER-ID-NUMBER bash```
+Then open <http://localhost:8000>.
 
-```nvm use 10.23.0```
+## Modernization notes
 
-```cd /```
+The obsolete dual WebSocket implementation (`websocket` and `websocket-server`) was replaced by `ws`. The abandoned sanitizer dependency was replaced with local control-character removal and HTML escaping. The legacy logger was replaced with a small built-in logger, metrics now use `memjs`, dependency ranges are pinned, deprecated Node APIs were updated, and the old Node 0.6/10 install scripts and Ubuntu 14.04 container were replaced.
 
-```http-server -p 80 ./BrowserQuest/client```
-
-That is all you need to do.  It should be running and you can test it by typing 127.0.0.1 in the browser.
-
-
-More documentation on getting a production server running is located in client and server directories.
+The browser renderer still uses its original vendored RequireJS/jQuery-era client so the art, input, and rendering behavior remain compatible. New game state is delivered through an additive protocol message (`PROGRESSION`, type 27).
 
 ## License
 
-Code is licensed under MPL 2.0. Content is licensed under CC-BY-SA 3.0.
-See the LICENSE file for details.
-
-
-## Credits
-
-2020 Restoration and Port to Docker by:
-
-- Colorado Stark- [Colorado Stark](http://www.coloradostark.com)
-
-Original Project Created by [Little Workshop](http://www.littleworkshop.fr):
-
-- Franck Lecollinet - [@whatthefranck](http://twitter.com/whatthefranck)
-- Guillaume Lecollinet - [@glecollinet](http://twitter.com/glecollinet)
-
-
-
-
+Code is licensed under MPL 2.0. Content is licensed under CC-BY-SA 3.0. See [LICENSE](LICENSE).

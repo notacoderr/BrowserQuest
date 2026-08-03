@@ -1,0 +1,4 @@
+allowBuilds:
+  es5-ext: set this to true or false
+minimumReleaseAgeExclude:
+  - ws@8.21.2
