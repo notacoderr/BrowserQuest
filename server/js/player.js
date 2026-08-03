@@ -5,6 +5,7 @@ var cls = require("./lib/class"),
     Utils = require("./utils"),
     Properties = require("./properties"),
     Formulas = require("./formulas"),
+    Progression = require("./progression"),
     check = require("./format").check,
     Types = require("../../shared/js/gametypes");
 
@@ -63,6 +64,8 @@ module.exports = Player = Character.extend({
                 self.server.enter_callback(self);
 
                 self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints]);
+                self.progression = Progression.load(self.name);
+                self.sendProgression([]);
                 self.hasEnteredGame = true;
                 self.isDead = false;
             }
@@ -186,6 +189,7 @@ module.exports = Player = Character.extend({
                             self.equipItem(item);
                             self.broadcast(self.equip(kind));
                         }
+                        self.recordProgress("loot", kind);
                     }
                 }
             }
@@ -247,6 +251,16 @@ module.exports = Player = Character.extend({
             mob.forgetPlayer(self.id);
         });
         this.haters = {};
+    },
+
+    recordProgress: function(event, kind) {
+        var update = Progression.record(this.name, event, kind);
+        this.progression = Progression.load(this.name);
+        this.sendProgression(update.events);
+    },
+
+    sendProgression: function(events) {
+        this.send(new Messages.Progression(Progression.snapshot(this.progression), events).serialize());
     },
     
     getState: function() {

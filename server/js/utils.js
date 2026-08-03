@@ -1,13 +1,19 @@
 
 var Utils = {},
-    sanitizer = require('sanitizer'),
     Types = require("../../shared/js/gametypes");
 
 module.exports = Utils;
 
 Utils.sanitize = function(string) {
-    // Strip unsafe tags, then escape as html entities.
-    return sanitizer.escape(sanitizer.sanitize(string));
+    // Chat and names are rendered as text. Remove control characters and
+    // escape HTML metacharacters without relying on the abandoned sanitizer package.
+    return String(string || "")
+        .replace(/[\u0000-\u001f\u007f]/g, "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
 };
 
 Utils.random = function(range) {

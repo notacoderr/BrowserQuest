@@ -208,3 +208,13 @@ Messages.Blink = Message.extend({
                 this.item.id];
     }
 });
+
+Messages.Progression = Message.extend({
+    init: function(state, events) {
+        this.state = state;
+        this.events = events || [];
+    },
+    serialize: function() {
+        return [Types.Messages.PROGRESSION, this.state, this.events];
+    }
+});

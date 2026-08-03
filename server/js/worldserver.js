@@ -1,7 +1,6 @@
 
 var cls = require("./lib/class"),
     _ = require("underscore"),
-    Log = require('log'),
     Entity = require('./entity'),
     Character = require('./character'),
     Mob = require('./mob'),
@@ -543,6 +542,7 @@ module.exports = World = cls.Class.extend({
                     item = this.getDroppedItem(mob);
 
                 this.pushToPlayer(attacker, new Messages.Kill(mob));
+                attacker.recordProgress("kill", mob.kind);
                 this.pushToAdjacentGroups(mob.group, mob.despawn()); // Despawn must be enqueued before the item drop
                 if(item) {
                     this.pushToAdjacentGroups(mob.group, mob.drop(item));

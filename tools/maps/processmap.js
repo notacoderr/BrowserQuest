@@ -1,7 +1,7 @@
 
-var Log = require('log'),
+var createLogger = require('../../shared/js/logger'),
     _ = require('underscore'),
-    log = new Log(Log.DEBUG),
+    log = createLogger('debug'),
     Types = require("../../shared/js/gametypes");
 
 var map,
