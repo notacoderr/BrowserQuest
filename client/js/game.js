@@ -828,9 +828,36 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         if(mob.isAggressive && !mob.isAttacking() && self.player.isNear(mob, mob.aggroRange)) {
                             self.player.aggro(mob);
                         }
-                    });
                 });
-            
+            });
+
+            self.client.onProgression(function(progression, events) {
+                var percent = Math.floor((progression.xp / progression.xpToNext) * 100),
+                    $list = $('#quest-list').empty();
+
+                $('#level-value').text(progression.level);
+                $('#xp-text').text(progression.xp + ' / ' + progression.xpToNext + ' XP');
+                $('#xp-fill').css('width', percent + '%');
+
+                _.each(progression.quests, function(quest) {
+                    var status = quest.completed ? 'Complete' : quest.progress + ' / ' + quest.target,
+                        suffix = quest.repeatable && quest.cycles ? ' (x' + quest.cycles + ')' : '';
+                    $('<li>')
+                        .toggleClass('complete', quest.completed)
+                        .append($('<strong>').text(quest.title + suffix))
+                        .append($('<span>').text(quest.description + ' - ' + status + ' - ' + quest.reward + ' XP'))
+                        .appendTo($list);
+                });
+
+                _.each(events, function(event) {
+                    if(event.type === 'level') {
+                        self.showNotification('Level up! You are now level ' + event.level);
+                    } else if(event.type === 'quest') {
+                        self.showNotification('Quest complete: ' + event.title + ' (+' + event.reward + ' XP)');
+                    }
+                });
+            });
+
                 self.player.onAggro(function(mob) {
                     if(!mob.isWaitingToAttack(self.player) && !self.player.isAttackedBy(mob)) {
                         self.player.log_info("Aggroed by " + mob.id + " at ("+self.player.gridX+", "+self.player.gridY+")");

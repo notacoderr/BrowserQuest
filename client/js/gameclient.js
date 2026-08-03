@@ -31,6 +31,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.KILL] = this.receiveKill;
             this.handlers[Types.Messages.HP] = this.receiveHitPoints;
             this.handlers[Types.Messages.BLINK] = this.receiveBlink;
+            this.handlers[Types.Messages.PROGRESSION] = this.receiveProgression;
         
             this.useBison = false;
             this.enable();
@@ -371,6 +372,12 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.blink_callback(id);
             }
         },
+
+        receiveProgression: function(data) {
+            if(this.progression_callback) {
+                this.progression_callback(data[1], data[2] || []);
+            }
+        },
         
         onDispatched: function(callback) {
             this.dispatched_callback = callback;
@@ -386,6 +393,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
 
         onWelcome: function(callback) {
             this.welcome_callback = callback;
+        },
+
+        onProgression: function(callback) {
+            this.progression_callback = callback;
         },
 
         onSpawnCharacter: function(callback) {
